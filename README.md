@@ -1,15 +1,70 @@
-# リンク
+# editor.formatter
 
-- [geojsonの編集とtopojsonへの変換](https://mapshaper.org/)
-- [各県のgeojsonを配布](https://github.com/niiyz/JapanCityGeoJson)
+## グローバルの設定値を取得
 
-# 地図の中心やスケールの指定
+### get
+
+引数のフォーマットの設定値を取得する
+
+```
+editor.formatter.get('bgBlue')
+→
+classes: ["bgBlue"]
+deep: false
+remove: "none"
+selector: "p"
+split: undefined
+```
+
+### has
+
+引数のフォーマットがformatsプロパティに登録されているかどうか
+
+```
+editor.formatter.has('bgBlue')
+```
+
+
+## formatの追加・削除・トグル・確認
+
+### apply
+
+特定のformatを適用する
 
 ```js
-const projection = d3.geoMercator()
-  .translate([width/2,height/2])
-  .center([140.190179, 36.046454])
-  .scale(1600);
+onAction: function (_) {
+  editor.formatter.apply('bgRed');
+},
+```
 
-const path = d3.geoPath(projection);
+### remove
+
+formatを適用している場所にある特定のformatを削除
+
+```js
+onAction: function (_) {
+  editor.formatter.remove('bgRed');
+},
+```
+
+### toggle
+
+該当箇所にformatがあれば削除・無ければ追加
+
+```js
+onAction: function (_) {
+  editor.formatter.toggle('bgRed');
+},
+
+```
+
+### match
+
+該当箇所に引数のformatが適用されているかどうか
+
+```js
+onAction: function (_) {
+  editor.formatter.match('bgRed');
+},
+
 ```
