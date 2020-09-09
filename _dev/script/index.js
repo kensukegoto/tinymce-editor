@@ -1,14 +1,38 @@
+import data from "./data";
+
+
 const form = document.querySelector("#myForm");
 const addBtn = document.querySelector(".btn--add");
 const saveBtn = document.querySelector(".btn--save");
 
-addBtn.addEventListener("click",function(){
+data.forEach(item => {
+  addTextArea(item.type,item.content);
+})
+
+addBtn.addEventListener("click",addTextArea,false);
+
+saveBtn.addEventListener("click",function() {
+  tinyMCE.triggerSave();
+  const list = form.querySelectorAll("textarea");
+  list.forEach(item => {
+    console.log(item.value);
+  });
+});
+
+function addTextArea(type,content){
 
   const len = form.querySelectorAll("textarea").length;
 
   const section = document.createElement("section");
   const textarea = document.createElement("textarea");
   textarea.setAttribute("id",`textarea_${len + 1}`);
+
+  let tag;
+  if(type && content){
+    textarea.value = `<${type}>${content}</${type}>`;
+  }
+  
+
   section.appendChild(textarea);
 
   form.appendChild(section);
@@ -40,12 +64,4 @@ addBtn.addEventListener("click",function(){
     custom_colors: false,
 
   });
-});
-
-saveBtn.addEventListener("click",function() {
-  tinyMCE.triggerSave();
-  const list = form.querySelectorAll("textarea");
-  list.forEach(item => {
-    console.log(item.value);
-  });
-});
+}
