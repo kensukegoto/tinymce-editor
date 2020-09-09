@@ -106,3 +106,20 @@ hr {
 input, select {
   vertical-align: middle;
 }
+
+.m-tools {
+  display: flex;
+  flex-wrap: wrap;
+}
+.m-tools .item {
+  width: 25%;
+  border: 1px solid #333;
+  height: 48px;
+}
+.m-tools .item .btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
