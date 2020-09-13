@@ -1,5 +1,6 @@
 import data from "./data";
 
+console.log(data);
 
 const form = document.querySelector("#myForm");
 const addBtn = document.querySelector(".btn--add");
@@ -38,12 +39,13 @@ saveBtn.addEventListener("click",function() {
         block,
         tag: item.tagName,
         class: item.className,
-        content: item.innerHTML
+        content: item.innerHTML,
+        // encode: escape(item.innerHTML)
       })
     })
   });
 
-  console.log(data);
+  console.log(JSON.stringify(data));
 
   function createHTML(str){
     const tempEl = document.createElement('div');
