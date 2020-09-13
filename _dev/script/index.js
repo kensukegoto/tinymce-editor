@@ -5,21 +5,55 @@ const form = document.querySelector("#myForm");
 const addBtn = document.querySelector(".btn--add");
 const saveBtn = document.querySelector(".btn--save");
 
-data.forEach(item => {
-  addTextArea(item.type,item.content);
-})
+let items = data.reduce((list,item)=> {
+
+  if(!list[item.block]){
+    list[item.block] = [];
+    list[item.block].push(item);
+  } else {
+    list[item.block].push(item);
+  }
+
+  return list
+
+},[]);
+
+items.forEach(list => {
+  addTextArea(list);
+});
+
 
 addBtn.addEventListener("click",addTextArea,false);
 
 saveBtn.addEventListener("click",function() {
+
+  let data = [];
   tinyMCE.triggerSave();
-  const list = form.querySelectorAll("textarea");
-  list.forEach(item => {
-    console.log(item.value);
+
+  const sect = form.querySelectorAll("textarea");
+  sect.forEach((content,block) => {
+    const nodes = createHTML(content.value);
+    [...nodes].forEach(item => {
+      data.push({
+        block,
+        tag: item.tagName,
+        class: item.className,
+        content: item.innerHTML
+      })
+    })
   });
+
+  console.log(data);
+
+  function createHTML(str){
+    const tempEl = document.createElement('div');
+    tempEl.innerHTML = str;
+    return tempEl.querySelectorAll(":scope > *");
+  }
+
 });
 
-function addTextArea(type,content){
+function addTextArea(list){
 
   const len = form.querySelectorAll("textarea").length;
 
@@ -27,10 +61,11 @@ function addTextArea(type,content){
   const textarea = document.createElement("textarea");
   textarea.setAttribute("id",`textarea_${len + 1}`);
 
-  let tag;
-  if(type && content){
-    textarea.value = `<${type}>${content}</${type}>`;
-  }
+  let value = "";
+  list.forEach(item => {
+    value += `<${item.tag} class="${item.class}">${item.content}</${item.tag}>`;
+  });
+  textarea.value = value;
 
   section.appendChild(textarea);
 
