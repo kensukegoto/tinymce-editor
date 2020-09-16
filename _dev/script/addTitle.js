@@ -1,5 +1,5 @@
 export default (form,list) => {
-  
+
   const len = form.querySelectorAll("input[type='text'],textarea").length;
 
   let value = "";
@@ -11,12 +11,15 @@ export default (form,list) => {
   const flagment = document.createElement("div");
 
   flagment.innerHTML =  `
-    <section>
-      <div class="radio__box">
-        <input type="radio" name="radio_${len + 1}" value="h2">中
-        <input type="radio" name="radio_${len + 1}" value="h3">小
+    <section class="sec">
+      <div class="sec__inner">
+        <div class="radio__box">
+          <input type="radio" name="radio_${len + 1}" value="h2">中
+          <input type="radio" name="radio_${len + 1}" value="h3">小
+        </div>
+        <input id="textarea_${len + 1}" data-id="${len + 1}" type="text" value="${value}">
       </div>
-      <input id="textarea_${len + 1}" data-id="${len + 1}" type="text" value="${value}">
+      <div class="tool"><a class="delete">削除</a></div>
     </section>`;
 
   form.appendChild(flagment.querySelector("section"));

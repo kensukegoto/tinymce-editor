@@ -12,13 +12,16 @@ export default (form,list) => {
   const flagment = document.createElement("div");
 
   flagment.innerHTML =  `
-    <section>
-      <textarea 
-        id="textarea_${len + 1}" 
-        data-id="${len + 1}" 
-      >
-      ${value}
-      </textarea>
+    <section class="sec">
+      <div class="sec__inner">
+        <textarea 
+          id="textarea_${len + 1}" 
+          data-id="${len + 1}" 
+        >
+        ${value}
+        </textarea>
+      </div>
+      <div class="tool"><a class="delete">削除</a></div>
     </section>`;
 
   form.appendChild(flagment.querySelector("section"));
