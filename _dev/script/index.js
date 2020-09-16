@@ -132,7 +132,6 @@ function addTextArea(list,isTitle){
     },
     toolbar: 'bold forecolor | textBg alignment',
     color_map: [
-      '333333', 'Black',
       'FF0000', 'Red',
       '0000FF', 'Blue',
     ],
