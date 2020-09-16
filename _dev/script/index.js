@@ -1,9 +1,8 @@
 import data from "./data";
 
-console.log(data);
-
 const form = document.querySelector("#myForm");
-const addBtn = document.querySelector(".btn--add");
+const addBtn = document.querySelector(".btn--add-text");
+const addBtnTitle = document.querySelector(".btn--add-title");
 const saveBtn = document.querySelector(".btn--save");
 
 let items = data.reduce((list,item)=> {
@@ -24,7 +23,13 @@ items.forEach(list => {
 });
 
 
-addBtn.addEventListener("click",addTextArea,false);
+addBtn.addEventListener("click",() => {
+  addTextArea();
+},false);
+
+addBtnTitle.addEventListener("click",() => {
+  addTextArea(null,true);
+},false);
 
 saveBtn.addEventListener("click",function() {
 
@@ -55,7 +60,8 @@ saveBtn.addEventListener("click",function() {
 
 });
 
-function addTextArea(list){
+
+function addTextArea(list,isTitle){
 
   const len = form.querySelectorAll("textarea").length;
 
@@ -64,14 +70,44 @@ function addTextArea(list){
   textarea.setAttribute("id",`textarea_${len + 1}`);
 
   let value = "";
-  list.forEach(item => {
-    value += `<${item.tag} class="${item.class}">${item.content}</${item.tag}>`;
-  });
+  if(list){
+    list.forEach(item => {
+      value += `<${item.tag} class="${item.class}">${item.content}</${item.tag}>`;
+    });
+  }
+
   textarea.value = value;
 
   section.appendChild(textarea);
 
   form.appendChild(section);
+
+  if(isTitle){
+    tinymce.init({
+      selector: `textarea#textarea_${len + 1}`,
+      plugins: 'paste',
+      paste_as_text: true,
+      contextmenu: false,
+      // forced_root_block: false,　// 改行をpとbrどちらにするか
+      menubar: false,
+      height: 100,
+      // contextmenu_never_use_native: true,
+      content_style: `
+        body { font-family:Helvetica,Arial,sans-serif; font-size:14px }
+        `,
+      formats: {
+        bold: { inline: 'span', classes: 'bold' },
+      },
+      toolbar: 'bold forecolor',
+      color_map: [
+        '333333', 'Black',
+        'FF0000', 'Red',
+        '0000FF', 'Blue',
+      ],
+      custom_colors: false,
+    })
+    return;
+  }
 
   tinymce.init({
     selector: `textarea#textarea_${len + 1}`,
@@ -80,7 +116,7 @@ function addTextArea(list){
     contextmenu: false,
     // forced_root_block: false,　// 改行をpとbrどちらにするか
     menubar: false,
-    height: 500,
+    height: 320,
     // contextmenu_never_use_native: true,
     content_style: `
       body { font-family:Helvetica,Arial,sans-serif; font-size:14px }
@@ -91,11 +127,10 @@ function addTextArea(list){
       `,
     formats: {
       bold: { inline: 'span', classes: 'bold' },
-      para: { block: 'p', classes: 'para'},
       bgBlue : { selector: 'p', classes: 'bgBlue'},
       bgRed : { selector: 'p', classes: 'bgRed'},
     },
-    toolbar: 'undo redo | para bold forecolor | textBg alignment',
+    toolbar: 'bold forecolor | textBg alignment',
     color_map: [
       '333333', 'Black',
       'FF0000', 'Red',

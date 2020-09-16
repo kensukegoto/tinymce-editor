@@ -105,11 +105,29 @@ hr {
 
 input, select {
   vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.b-tools {
+  max-width: 700px;
+  margin: 32px auto 0;
+}
+
+.b-form section {
+  margin: 32px auto 0;
+  max-width: 700px;
+}
+.b-form section:first-child {
+  margin-top: 0;
+}
+.b-form input[type=text] {
+  width: 100%;
 }
 
 .m-tools {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 .m-tools .item {
   width: 25%;
