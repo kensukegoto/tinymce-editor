@@ -19,7 +19,16 @@ let items = data.reduce((list,item)=> {
 },[]);
 
 items.forEach(list => {
-  addTextArea(list);
+
+  if(list[0].tag === "p"){
+    return addTextArea(list);
+  }
+  if(list[0].tag === "h2" || list[0].tag === "h3"){
+    return addTitleArea(list[0]);
+  }
+  
+
+
 });
 
 
@@ -36,18 +45,34 @@ saveBtn.addEventListener("click",function() {
   let data = [];
   tinyMCE.triggerSave();
 
-  const sect = form.querySelectorAll("textarea");
+  const sect = form.querySelectorAll("input[type='text'],textarea");
+
   sect.forEach((content,block) => {
+
     const nodes = createHTML(content.value);
-    [...nodes].forEach(item => {
-      data.push({
-        block,
-        tag: item.tagName,
-        class: item.className,
-        content: item.innerHTML,
-        // encode: escape(item.innerHTML)
+
+    if(nodes.length !== 0 ) {
+      [...nodes].forEach(item => {
+        data.push({
+          block,
+          tag: item.tagName.toLowerCase(),
+          class: item.className,
+          content: item.innerHTML,
+          // encode: escape(item.innerHTML)
+        })
       })
+
+      return;
+    }
+
+    data.push({
+      block,
+      tag: content.className.toLowerCase(),
+      class: "",
+      content: content.value,
+      // encode: escape(item.innerHTML)
     })
+
   });
 
   console.log(JSON.stringify(data));
@@ -168,6 +193,7 @@ function addTextArea(list){
 function addTitleArea(list){
 
   const len = form.querySelectorAll("input[type='text'],textarea").length;
+
 
   let value = "";
 
