@@ -13,7 +13,12 @@ export default (form,list) => {
 
   flagment.innerHTML =  `
     <section>
-      <textarea id="textarea_${len + 1}" data-id="${len + 1}" value="${value}"></textarea>
+      <textarea 
+        id="textarea_${len + 1}" 
+        data-id="${len + 1}" 
+      >
+      ${value}
+      </textarea>
     </section>`;
 
   form.appendChild(flagment.querySelector("section"));
