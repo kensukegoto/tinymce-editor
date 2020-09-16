@@ -8,5 +8,10 @@
   }
   input[type="text"]{
     width: 100%;
+    border: 1px solid #ccc;
+    outline: none;
+    padding: 16px;
+    font-size: 24px;
+    font-weight: bold;
   }
 }

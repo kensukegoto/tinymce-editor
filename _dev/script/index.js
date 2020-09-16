@@ -28,7 +28,7 @@ addBtn.addEventListener("click",() => {
 },false);
 
 addBtnTitle.addEventListener("click",() => {
-  addTextArea(null,true);
+  addTitleArea();
 },false);
 
 saveBtn.addEventListener("click",function() {
@@ -61,9 +61,9 @@ saveBtn.addEventListener("click",function() {
 });
 
 
-function addTextArea(list,isTitle){
+function addTextArea(list){
 
-  const len = form.querySelectorAll("textarea").length;
+  const len = form.querySelectorAll("input[type='text'],textarea").length;
 
   const section = document.createElement("section");
   const textarea = document.createElement("textarea");
@@ -81,33 +81,6 @@ function addTextArea(list,isTitle){
   section.appendChild(textarea);
 
   form.appendChild(section);
-
-  if(isTitle){
-    tinymce.init({
-      selector: `textarea#textarea_${len + 1}`,
-      plugins: 'paste',
-      paste_as_text: true,
-      contextmenu: false,
-      // forced_root_block: false,　// 改行をpとbrどちらにするか
-      menubar: false,
-      height: 100,
-      // contextmenu_never_use_native: true,
-      content_style: `
-        body { font-family:Helvetica,Arial,sans-serif; font-size:14px }
-        `,
-      formats: {
-        bold: { inline: 'span', classes: 'bold' },
-      },
-      toolbar: 'bold forecolor',
-      color_map: [
-        '333333', 'Black',
-        'FF0000', 'Red',
-        '0000FF', 'Blue',
-      ],
-      custom_colors: false,
-    })
-    return;
-  }
 
   tinymce.init({
     selector: `textarea#textarea_${len + 1}`,
@@ -190,4 +163,26 @@ function addTextArea(list,isTitle){
 
     }
   });
+}
+
+function addTitleArea(list){
+
+  const len = form.querySelectorAll("input[type='text'],textarea").length;
+
+  const section = document.createElement("section");
+  const textarea = document.createElement("input");
+  textarea.setAttribute("id",`textarea_${len + 1}`);
+  textarea.setAttribute("type","text");
+
+  let value = "";
+
+  if(list){
+    value += list;
+  }
+
+  textarea.value = value;
+
+  section.appendChild(textarea);
+
+  form.appendChild(section);
 }
