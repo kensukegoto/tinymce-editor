@@ -139,6 +139,7 @@ function addTextArea(list,isTitle){
     custom_colors: false,
     setup: function(editor){
 
+      editor.ui.registry.addIcon('bgNone',`<svg width="24" height="24"><rect x="3" y="3" width="18" height="18" rx="1" fill-rule="evenodd" fill="transparent" stroke-dasharray="4" stroke="#333"></rect></svg>`);
       editor.ui.registry.addIcon('bgBlue',`<svg width="24" height="24"><rect x="3" y="3" width="18" height="18" rx="1" fill-rule="evenodd" fill="#f5e9f7"></rect></svg>`);
       editor.ui.registry.addIcon('bgRed',`<svg width="24" height="24"><rect x="3" y="3" width="18" height="18" rx="1" fill-rule="evenodd" fill="#fee5e5"></rect></svg>`);
 
@@ -147,6 +148,18 @@ function addTextArea(list,isTitle){
         icon: 'fill',
         fetch: function (callback) {
           var items = [
+            {
+              type: 'menuitem',
+              text: '無',
+              icon: 'bgNone',
+              onAction: function (_) {
+                editor.formatter.remove('bgRed');
+                editor.formatter.remove('bgBlue');
+              },
+              onSetup: function(api) {
+                return function() {};
+              }
+            },
             {
               type: 'menuitem',
               text: '青',
